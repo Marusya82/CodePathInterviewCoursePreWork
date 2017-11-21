@@ -1,0 +1,51 @@
+public class Solution {
+    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
+    public int kthsmallest(final int[] A, int B) {
+        return recurse(A, 0, A.length - 1, B - 1);
+    }
+    
+    private static int recurse(int[] arr, int left, int right, int k) {
+		if (left == right) {
+			return arr[left];
+		}
+		int pivotIndex = randomPivot(left, right); 
+		pivotIndex = partition(arr, left, right, pivotIndex);
+		if (k == pivotIndex) {
+			return arr[k];
+		} else if (k < pivotIndex) {
+			return recurse(arr, left, pivotIndex - 1, k);
+		} else {
+			return recurse(arr, pivotIndex + 1, right, k);
+		}
+	}
+	
+	private static int partition(int[] arr, int left, int right, int pivotIndex) {
+		int pivotValue = arr[pivotIndex];
+		swap(arr, pivotIndex, right);
+		int storeIndex = left;
+		for(int i = left; i < right; i++) {
+			if(arr[i] < pivotValue) {
+				swap(arr, storeIndex, i);
+				storeIndex++;
+			}
+		}
+		swap(arr, right, storeIndex);
+// 		System.out.print("ARRAY ");
+// 		for (int i = 0; i < arr.length; i++) {
+// 		    System.out.print(arr[i] + " ");
+// 		}
+		return storeIndex;
+	}
+	
+	private static void swap(int[] arr, int a, int b) {
+		int tmp = arr[a];
+		arr[a] = arr[b];
+		arr[b] = tmp;
+	}
+
+	private static int randomPivot(int left, int right) {
+	    int pivot = left + (int) Math.floor(Math.random() * (right - left));
+	   // System.out.print("PIVOT " + pivot + " ");
+		return pivot;
+	}
+}
