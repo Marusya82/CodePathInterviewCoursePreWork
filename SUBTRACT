@@ -1,0 +1,62 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+public class Solution {
+    public ListNode subtract(ListNode A) {
+        // create a deep copy of A
+        ListNode pointerA = A;
+        ListNode B = new ListNode(A.val);
+        ListNode pointerB = B;
+        while (pointerA.next != null) {
+            ListNode next = new ListNode(pointerA.next.val);
+            B.next = next;
+            B = next;
+            pointerA = pointerA.next;
+        }
+        
+        // reserve the second half of the list and compute, then combine
+        int length = 0;
+		ListNode currNode = A;
+		ListNode nextNode = null;
+		ListNode prevNode = null;
+		while (currNode != null) {
+		    length += 1;
+			nextNode = currNode.next;
+			currNode.next = prevNode;
+			prevNode = currNode;
+			currNode = nextNode;
+		}
+		ListNode reversed = prevNode;
+// 		System.out.print("Reversed list");
+// 		display(reversed);
+		
+		ListNode copy = pointerB;
+        ListNode result = copy;
+		// subtract
+        for (int i = 0; i < length/2; i++) {
+            // System.out.print("reversed.val = ");
+            // System.out.print(reversed.val);
+            // System.out.print("copy.val = ");
+            // System.out.print(copy.val);
+            copy.val = reversed.val - copy.val;
+            copy = copy.next;
+            reversed = reversed.next;
+        }
+        // display(result);
+        return result;
+    }
+	
+	public void display(ListNode head){
+		ListNode currNode = head;
+		while (currNode != null){
+			System.out.print(currNode.val + "->");
+			currNode = currNode.next;
+		}
+		System.out.println();
+	}
+}
