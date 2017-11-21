@@ -1,0 +1,21 @@
+public class Solution {
+    public int[][] prettyPrint(int A) {
+        int size = A*2 - 1;
+        int[][] result = new int[size][size];
+        int factor = A;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                int first = size/2 - i;
+                if (first < 0) first = first * -1;
+                int second = size/2 - j;
+                if (second < 0) second = second * -1;
+                if (first > second) {
+                    result[i][j] = first + 1;
+                } else {
+                    result[i][j] = second + 1;
+                }
+            }
+        }
+        return result;
+    }
+}
