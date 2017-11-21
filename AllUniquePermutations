@@ -1,0 +1,30 @@
+public class Solution {
+    public int[][] permute(int[] A) {
+        int length = A.length;
+        ArrayList<ArrayList<Integer>> returnList = new ArrayList<ArrayList<Integer>>();
+        returnList.add(new ArrayList<Integer>());
+        for (int i = 0; i < length; i++) {
+            Set<ArrayList<Integer>> currentSet = new HashSet<ArrayList<Integer>>();
+            for (List<Integer> l : returnList) {
+                for (int j = 0; j <= l.size(); j++) {
+                    l.add(j, A[i]);
+                    ArrayList<Integer> T = new ArrayList<Integer>(l);
+                    l.remove(j);
+                    currentSet.add(T);
+                }
+            }
+            returnList = new ArrayList<ArrayList<Integer>>(currentSet);
+        }
+        int[][] result = new int[returnList.size()][length];
+        int i = 0;
+        for (ArrayList<Integer> l : returnList) {
+            int j = 0;
+            for (Integer num : l) {
+                result[i][j] = num;
+                j++;
+            }
+            i++;
+        }
+        return result;
+    }
+}
